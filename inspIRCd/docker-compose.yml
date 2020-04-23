@@ -8,8 +8,8 @@ services:
     depends_on:
       - inspircd1
     ports:
-      - "7000:6667"
-      - "7001:6697"
+      - "6667:6667"
+      - "7000"
     networks:
       - backend
 
@@ -18,44 +18,46 @@ services:
     volumes:
       - ./server1/conf/:/inspircd/conf/
     environment:
-      INSP_NET_SUFFIX: .local
       INSP_NET_NAME: inspircd1
       INSP_SERVER_NAME: inspircd1.local
+      INSP_NET_SUFFIX: .local
 
       INSP_LINK1_NAME: inspircd2
       INSP_LINK1_IPADDR: inspircd2
       INSP_LINK1_SENDPASS: password
       INSP_LINK1_RECVPASS: password
       INSP_LINK1_TLS_ON: "no"
-    #ports:
-    #  - "6667" #client
+    ports:
+      - "6667" #client
     #  - "6697" #client
-    #  - "7000" #server
+      - "7000" #server
     #  - "7001" #server
     networks:
       - backend
        # aliases:
        #   - inspircd1.local
 
-  #inspircd2:
-  #  image: inspircd/inspircd-docker
-  #  #volumes:
-  #  environment:
-  #    INSP_NET_SUFFIX: .local
-  #    INSP_SERVER_NAME: inspircd2.local
-  #    
-  #    INSP_LINK1_NAME: inspircd1.local
-  #    INSP_LINK1_IPADDR: inspircd1
-   #   INSP_LINK1_SENDPASS: password
-   #   INSP_LINK1_RECVPASS: password
-  #    INSP_LINK1_TLS_ON: "no"
-  #  ports:
-  #    - "6667"
+  inspircd2:
+    image: inspircd/inspircd-docker
+    volumes:
+      - ./server1/conf/:/inspircd/conf/
+    environment:
+      INSP_NET_NAME: inspircd2
+      INSP_SERVER_NAME: inspircd2.local
+      INSP_NET_SUFFIX: .local
+      
+      INSP_LINK1_NAME: inspircd1
+      INSP_LINK1_IPADDR: inspircd1
+      INSP_LINK1_SENDPASS: password
+      INSP_LINK1_RECVPASS: password
+      INSP_LINK1_TLS_ON: "no"
+    ports:
+      - "6667"
   #    - "6697"
-  #    - "7000"
+      - "7000"
   #    - "7001"
-  #  networks:
-  #    - backend
+    networks:
+      - backend
 
   
 
