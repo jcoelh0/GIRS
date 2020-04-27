@@ -9,7 +9,7 @@ services:
       - inspircd1
     ports:
       - "6667:6667"
-      - "7000"
+      #- "7000"
     networks:
       - backend
 
@@ -22,11 +22,12 @@ services:
       INSP_SERVER_NAME: inspircd1.local
       INSP_NET_SUFFIX: .local
 
-      INSP_LINK1_NAME: inspircd2
+      INSP_LINK1_NAME: inspircd2.local
       INSP_LINK1_IPADDR: inspircd2
       INSP_LINK1_SENDPASS: password
       INSP_LINK1_RECVPASS: password
       INSP_LINK1_TLS_ON: "no"
+      INSP_LINK1_ALLOWMASK: 10.0.0.0/16
     ports:
       - "6667" #client
     #  - "6697" #client
@@ -40,17 +41,18 @@ services:
   inspircd2:
     image: inspircd/inspircd-docker
     volumes:
-      - ./server1/conf/:/inspircd/conf/
+      - ./server2/conf/:/inspircd/conf/
     environment:
       INSP_NET_NAME: inspircd2
       INSP_SERVER_NAME: inspircd2.local
       INSP_NET_SUFFIX: .local
       
-      INSP_LINK1_NAME: inspircd1
-      INSP_LINK1_IPADDR: inspircd1
-      INSP_LINK1_SENDPASS: password
-      INSP_LINK1_RECVPASS: password
-      INSP_LINK1_TLS_ON: "no"
+      INSP_LINK2_NAME: inspircd1.local
+      INSP_LINK2_IPADDR: inspircd1
+      INSP_LINK2_SENDPASS: password
+      INSP_LINK2_RECVPASS: password
+      INSP_LINK2_TLS_ON: "no"
+      INSP_LINK1_ALLOWMASK: 10.0.0.0/16
     ports:
       - "6667"
   #    - "6697"
@@ -59,21 +61,6 @@ services:
     networks:
       - backend
 
-  
-
-
-  #nginx: 
-  #  image: 'bitnami/nginx'
-  #  volumes:
-  #    - ./nginx/:/etc/nginx
-  #  ports:
-  #    - '6667:6667'
-  #    - '6697:6697'
-  #  links:
-  #    - inspircd1
-  #    - inspircd2
-  #  networks:
-  #    - backend
 
 networks:
   backend:
