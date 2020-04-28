@@ -1,0 +1,252 @@
+\documentclass{report}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[backend=biber, style=ieee]{biblatex}
+\usepackage{csquotes}
+\usepackage[portuguese]{babel}
+\usepackage{blindtext}
+\usepackage[printonlyused]{acronym}
+\usepackage{hyperref}
+\usepackage{graphicx,wrapfig}
+\usepackage{float}
+\usepackage{amsmath}
+\usepackage{mathabx}
+\usepackage{mathtools}
+\usepackage{indentfirst} % identar a primeira linha 
+\usepackage{graphicx,wrapfig,lipsum}
+
+\usepackage{titlesec}
+
+
+\bibliography{bibliografia}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% DEFINIÇÕES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\titulo{Gestão Integrada de Redes e Sistemas}
+\def\data{25 de Abril de 2020}
+\def\autores{Tiago Almeida, João Coelho}
+\def\autorescontactos{tiago.jorge.gomes@ua.pt 76404, mail_coelh}
+\def\versao{1.0}
+\def\departamento{Departamento de Electrónica, Telecomunicações e Informática }
+\def\empresa{EMPRESA}
+\def\logotipo{ualogo.png}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% CAPA
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+
+\begin{center}
+%
+\vspace*{50mm}
+%
+{\Huge\textbf{\titulo}}\\
+%
+\vspace{10mm}
+%
+%{\Large \empresa}\\
+%
+\vspace{5mm}
+%
+{\LARGE \autores}\\
+%
+%
+\vspace{20mm}
+%
+\begin{figure}[h]
+\center
+\includegraphics[width=50mm,height=50mm,scale=0.5]{\logotipo}
+\end{figure}
+%
+\vspace{20mm}
+\end{center}
+%
+\begin{flushright}
+\versao
+\end{flushright}
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% PÁGINA DE TÍTULO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{%
+    {\Huge\textbf{Simple Operation of the Product}}\\
+    {\Large \departamento\\}
+    %{\Large \departamento\\ \empresa}
+}
+%
+\author{%
+    \autores \\
+    \autorescontactos
+}
+%
+\date{\data}
+%
+\maketitle
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% TABELA DE CONTEÚDOS E FIGURAS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tableofcontents
+%\listoftables
+%\listoffigures
+
+\clearpage
+\pagenumbering{arabic}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Produto Fornecido
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Produto fornecido}
+\label{chap.introducao}
+\par O produto fornecido tem o propósito de fornecer Servidores IRC para uso numa aplicação chat à escolha. \par
+
+\section{Número esperado de clientes}
+\par Para o teste do produto em questão, foi decidido ter o foco em que a sua utilização iria ser feita por algum departamento de uma universidade de forma a manter o contacto entre os seus respetivos trabalhadores/estudantes. Não sabendo ao certo qual o número de "clientes" ao certo, decidimos apontar para os quinhentos. \par
+
+\section{Número esperado de pedidos}
+\par Tendo em consideração que num dia todos os clientes ou parte deles utilizam o produto fornecido, é expectável obter em média uma estimativa de aproximadamente 0.0058 pedidos por segundo. Os números podem variar bastante pois podem existir dias com grande uso do produto por parte dos clientes e há alturas do dia em que há um pico desse mesmo, logo, num futuro próximo será tido isso em conta e será testado para obter resultados mais concretos tendo em conta os vários casos referidos anteriormente.\par
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Software utilizado
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Software Usado}
+\label{chap.software}
+\par Para o funcionamento correto do produto escolhido optámos por escolher uma lista vaga de software para nos ajudar quer na formação deste mesmo, na sua virtualização e na vertente de obter os melhores resultados a nível do seu balanceamento. 
+\par
+\par Tendo em conta a arquitetura do nosso produto, para usar como balanceador o HAProxy que vai interligar com o nosso servidor InspIRCd. No que diz respeito ao servidor, para obter redundância é usado sempre dois ou mais servidores sincronizados entre si com uma base de dados para o caso de um falhar, não haver comprometimento da ligação e assegurar o bom funcionamento da aplicação. Para implementar a base de dados é usado o software MySQL. 
+\par
+\par Para obtermos uma boa escalabilidade do Software usado, é usado a ferramenta Docker Swarm, sendo que esta mesmo nos permite criar vários "clusters do Docker" ou seja, que diversos hosts do docker tenham acesso aos mesmos recursos. O Swarm é que passa a ser o responsável pela escolha do local onde alocar os containers nos nós do cluster. Desta forma, para suportar o aumento dos recursos, serão criados mais containers (workers) e adicionados aos respetivos clusters.
+\par
+\par De seguida, segue uma breve explicação das ferramentas utilizadas e o seu grande propósito relacionado com o nosso produto.
+\par
+
+\begin{figure}[h]
+\center
+\includegraphics[width=80mm,height=80mm,scale=0.5]{produto_arquitec.png}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%
+%% HAProxy
+%%%%%%%%%%%%%%%%%%%%
+
+\newpage
+
+\section{HAProxy}
+\par HAProxy é um software de código aberto e gratuito que fornece um balanceador de carga e servidor proxy de alta disponibilidade para aplicativos baseados em TCP/IP e HTTP que espalha solicitações por vários servidores. Encontra-se escrito na linguagem C e tem uma reputação de ser rápido e eficiente (em termos de processador e uso de memória), sendo usado por várias companhias lideres tais como o GitHub, reddit e stackoverflow.
+\par
+
+\begin{figure}[h]
+\center
+\includegraphics[width=80mm,height=50mm,scale=0.5]{haproxylogo.png}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%
+%% InspIRCd
+%%%%%%%%%%%%%%%%%%%%
+\newpage
+
+\section{InspIRCd}
+\par É usado como base o InspIRCd, sendo o mesmo um servidor IRC (Internet Relay Chat, protocolo de comunicação usado basicamente em aplicações Chat) modular escrito em C++ para sistemas Linux, BSD, Windows e macOS.
+Foi criado de raiz para ser estável e leve, fornecendo um número ajustável de recursos, sendo personalizável de acordo com as necessidades de diferentes utilizadores.
+\par
+
+\begin{figure}[h]
+\center
+\includegraphics[width=80mm,height=50mm,scale=0.5]{inspircd.jpg}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%
+%% MySQL
+%%%%%%%%%%%%%%%%%%%%
+
+\section{MySQL}
+\par falar da base de dados \par
+
+%%%%%%%%%%%%%%%%%%%%
+%% Docker
+%%%%%%%%%%%%%%%%%%%%
+
+\section{Docker}
+\par O Docker é uma ferramenta projetada para facilitar a criação, a implementação e execução de aplicações usando containers. Os containers permitem que um developer junte uma aplicação com todas as partes necessárias, tais como bibliotecas e dependências, podendo enviar tudo como um único pacote. O isolamento e a segurança dos containers permitem executar várias instâncias num determinado host sendo que estes mesmos são leves. 
+\par
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%
+%% Docker Arquitec
+%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Arquitetura do Docker}
+\par O Docker utiliza uma arquitetura cliente-servidor. O cliente Docker comunica com o Docker daemon, que faz grande parte do trabalho, ou seja a construção, a execução e a distribuição dos seus Docker containers. O cliente Docker e o daemon podem ser executados no mesmo sistema ou pode-se conectar o cliente Docker a um daemon remoto sendo que estes dois comunicam usando uma API REST sobre UNIX sockets ou uma interface de rede.
+\par
+
+\begin{figure}[h]
+\center
+\includegraphics[width=100mm,height=40mm,scale=0.5]{docker_arquitec.png}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%
+%% Docker Compose
+%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Docker Compose}
+\par O compose é uma ferramenta para a definição e execução de vários Docker containers de aplicações. Com esta ferramenta, pode-se usar um ficheiro YAML para configurar o serviço da aplicação. Após a criação do ficheiro de configuração pode-se facilmente criar e iniciar todos os serviços que foram introduzidos no mesmo. 
+\par
+
+\par De forma simplificada o uso do Compose pode ser descrito em três processos:
+\begin{enumerate}
+  \item Definir o ambiente das aplicações com o Dockerfile para conseguir ser reproduzido em qualquer lado.
+  \item Definir os serviços que fazem parte da aplicação pretendida no ficheiro.yml para ser executado em conjunto num ambiente isolado.
+  \item Executar o comando "docker-compose up" e dessa forma o Compose arranca e inicia toda a aplicação.
+\end{enumerate}
+\par
+\par Abaixo encontra-se uma imagem exemplo do Dockerfile usado.
+\par
+
+\begin{figure}[h]
+\center
+\includegraphics[width=80mm,height=80mm,scale=0.5]{compose.png}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%
+%% Docker Swarm
+%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Docker Swarm}
+\par O Docker Swarm é uma ferramenta de "clustering" e de agendamento para Docker Containers. Com o Swarm, os admnistradores e programadores de IT podem estabelecer e gerir um "cluster" dos nós do Docker como um único sistema virtual. 
+\par
+
+\begin{figure}[h]
+\center
+\includegraphics[width=100mm,height=50mm,scale=0.5]{swarm.png}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Análise de Recursos 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Análise de Recursos}
+\label{chap.recursos}
+\par suportar o numero de clientes previsto, metade o dobro ou 10x mais \par
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Análise da Performance
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Análise da Performance}
+\label{chap.performance}
+\par anallise da performance do software instalado na plataforma do deti \par 
+
+\end{document}
