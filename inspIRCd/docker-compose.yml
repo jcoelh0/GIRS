@@ -9,7 +9,6 @@ services:
       - inspircd1
     ports:
       - "6667:6667"
-      #- "7000"
     networks:
       - backend
 
@@ -28,15 +27,20 @@ services:
       INSP_LINK1_RECVPASS: password
       INSP_LINK1_TLS_ON: "no"
       INSP_LINK1_ALLOWMASK: 10.0.0.0/16
+      
+      INSP_LINK2_NAME: anope.local
+      INSP_LINK2_IPADDR: anope
+      INSP_LINK2_SENDPASS: anope
+      INSP_LINK2_RECVPASS: anope
+      INSP_LINK2_PORT: 7000
+      INSP_LINK2_TLS_ON: "no"
+      INSP_LINK2_ALLOWMASK: 10.0.0.0/16
     ports:
       - "6667" #client
-    #  - "6697" #client
       - "7000" #server
-    #  - "7001" #server
+      - "7001"
     networks:
       - backend
-       # aliases:
-       #   - inspircd1.local
 
   inspircd2:
     image: inspircd/inspircd-docker
@@ -52,15 +56,41 @@ services:
       INSP_LINK2_SENDPASS: password
       INSP_LINK2_RECVPASS: password
       INSP_LINK2_TLS_ON: "no"
-      INSP_LINK1_ALLOWMASK: 10.0.0.0/16
+      INSP_LINK2_ALLOWMASK: 10.0.0.0/16
     ports:
       - "6667"
-  #    - "6697"
       - "7000"
-  #    - "7001"
     networks:
       - backend
 
+  anope:
+    image: anope/anope
+    environment:
+      ANOPE_SERVICES_NAME: anope.local
+      ANOPE_SERVICES_VHOST: anope
+      ANOPE_UPLINK_IP: inspircd1
+      ANOPE_UPLINK_PORT: 7000
+      ANOPE_UPLINK_PASSWORD: anope
+      
+      #ANOPE_SQL_ENGINE: mysql
+      #ANOPE_MYSQL_PASSWORD: anope
+    ports:
+      - "7000"
+    depends_on:
+      - inspircd1
+    networks:
+      - backend
+      
+  #database:
+  #  image: mysql
+  #  restart: always
+  #  environment:
+  #    MYSQL_USER: anope
+  #    MYSQL_ROOT_PASSWORD: root
+  #    MYSQL_PASSWORD: anope
+  #    MYSQL_DATABASE: anope
+  #  networks:
+  #    - backend
 
 networks:
   backend:

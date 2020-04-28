@@ -1,6 +1,14 @@
+on both server folders:
+
+cd conf
+sudo chown 10000:10000 *
+cd ..
+sudo chown 10000:10000 conf
+
+
 test locally:
 
-docker-compose up down
+docker-compose down & docker-compose up
 
 test with swarm:
 
