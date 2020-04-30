@@ -29,7 +29,7 @@
 \def\titulo{Gestão Integrada de Redes e Sistemas}
 \def\data{25 de Abril de 2020}
 \def\autores{Tiago Almeida, João Coelho}
-\def\autorescontactos{tiago.jorge.gomes@ua.pt 76404, mail_coelh}
+\def\autorescontactos{tiago.jorge.gomes@ua.pt 76404, jcoelho@ua.pt 80335}
 \def\versao{1.0}
 \def\departamento{Departamento de Electrónica, Telecomunicações e Informática }
 \def\empresa{EMPRESA}
@@ -108,13 +108,13 @@
 
 \chapter{Produto fornecido}
 \label{chap.introducao}
-\par O produto fornecido tem o propósito de fornecer Servidores IRC para uso numa aplicação chat à escolha. \par
+\par O produto fornecido tem o propósito de fornecer um serviço IRC para uso num contexto de trabalho. O serviço IRC tem alta escalabilidade e disponibilidade. Os utilizadores poderão conectar-se através de uma aplicação chat (IRC client) à escolha. \par
 
 \section{Número esperado de clientes}
-\par Para o teste do produto em questão, foi decidido ter o foco em que a sua utilização iria ser feita por algum departamento de uma universidade de forma a manter o contacto entre os seus respetivos trabalhadores/estudantes. Não sabendo ao certo qual o número de "clientes" ao certo, decidimos apontar para os quinhentos. \par
+\par Para o teste do produto em questão, foi decidido que a sua utilização iria ser feita por um grupo de professores e alunos de um departamento da universidade de Aveiro. Não sabendo ao certo qual o número esperado de clientes, estimamos que o número esperado de clientes esteja perto dos quinhentos. \par
 
 \section{Número esperado de pedidos}
-\par Tendo em consideração que num dia todos os clientes ou parte deles utilizam o produto fornecido, é expectável obter em média uma estimativa de aproximadamente 0.0058 pedidos por segundo. Os números podem variar bastante pois podem existir dias com grande uso do produto por parte dos clientes e há alturas do dia em que há um pico desse mesmo, logo, num futuro próximo será tido isso em conta e será testado para obter resultados mais concretos tendo em conta os vários casos referidos anteriormente.\par
+\par Tendo em consideração que num dia, todos os clientes ou parte deles utilizam o produto fornecido, é expectável obter em média uma estimativa de aproximadamente 0.348 pedidos por minuto. Os números podem variar bastante, sendo que podem existir dias com grande afluência por parte dos clientes e dias com menos utilização. Dependendo do dia, poderá haver alturas em que há um pico elevado de utilizadores (estimativa de 400 num dado instante) e outras em que haverá no máximo 100 pedidos numa hora. Num futuro próximo, o número efetuado de pedidos num dia será testado e monitorizado para obter resultados mais concretos, tendo em conta os vários casos referidos anteriormente. \par
 
 
 
@@ -124,13 +124,13 @@
 
 \chapter{Software Usado}
 \label{chap.software}
-\par Para o funcionamento correto do produto escolhido optámos por escolher uma lista vaga de software para nos ajudar quer na formação deste mesmo, na sua virtualização e na vertente de obter os melhores resultados a nível do seu balanceamento. 
+\par Para o funcionamento correto do produto selecionado, optámos por escolher vários softwares, que nos ajudassem a desenvolver o produto, assim como obter os melhores resultados ao nível de balanceamento de carga, de virtualização, de rede e da capacidade de armazenamento.  
 \par
-\par Tendo em conta a arquitetura do nosso produto, para usar como balanceador o HAProxy que vai interligar com o nosso servidor InspIRCd. No que diz respeito ao servidor, para obter redundância é usado sempre dois ou mais servidores sincronizados entre si com uma base de dados para o caso de um falhar, não haver comprometimento da ligação e assegurar o bom funcionamento da aplicação. Para implementar a base de dados é usado o software MySQL. 
+\par No que diz respeito à obtenção de redundância na nossa aplicação, são usados sempre dois ou mais servidores sincronizados entre si com uma base de dados. Assim sendo, no caso de um falhar não haverá comprometimento da ligação e assegurar-se-á o bom funcionamento da aplicação. Para implementar a base de dados é usado o software MySQL. Tendo em conta a arquitetura do nosso produto, decidimos usar o HAProxy como balanceador de carga, que vai distribuir os utilizadores pelos diferentes servidores InspIRCd, usando o algoritmo "Round Robin". 
 \par
-\par Para obtermos uma boa escalabilidade do Software usado, é usado a ferramenta Docker Swarm, sendo que esta mesmo nos permite criar vários "clusters do Docker" ou seja, que diversos hosts do docker tenham acesso aos mesmos recursos. O Swarm é que passa a ser o responsável pela escolha do local onde alocar os containers nos nós do cluster. Desta forma, para suportar o aumento dos recursos, serão criados mais containers (workers) e adicionados aos respetivos clusters.
+\par Para obtermos uma boa escalabilidade do software, utiliza-se a ferramenta Docker Swarm, sendo que esta nos permite criar vários "clusters do Docker", ou seja, que diversos hosts tenham acesso aos mesmos recursos. O Swarm é que passa a ser o responsável pela escolha do local onde alocar os containers nos nós do cluster. Desta forma, para suportar o aumento dos recursos, serão criados mais containers (workers) e adicionados aos respetivos clusters.
 \par
-\par De seguida, segue uma breve explicação das ferramentas utilizadas e o seu grande propósito relacionado com o nosso produto.
+\par De seguida, segue uma breve explicação das ferramentas utilizadas e o seu grande propósito relacionado com a nossa aplicação.
 \par
 
 \begin{figure}[h]
@@ -145,9 +145,10 @@
 \newpage
 
 \section{HAProxy}
-\par HAProxy é um software de código aberto e gratuito que fornece um balanceador de carga e servidor proxy de alta disponibilidade para aplicativos baseados em TCP/IP e HTTP que espalha solicitações por vários servidores. Encontra-se escrito na linguagem C e tem uma reputação de ser rápido e eficiente (em termos de processador e uso de memória), sendo usado por várias companhias lideres tais como o GitHub, reddit e stackoverflow.
+\par HAProxy é um software de código aberto e gratuito, que fornece um balanceador de carga e servidor proxy de alta disponibilidade para aplicativos baseados em TCP/IP e HTTP, que espalha solicitações por vários servidores. Encontra-se escrito na linguagem C e tem uma reputação de ser rápido e eficiente (em termos de processador e uso de memória), sendo usado por várias companhias líderes, tais como o GitHub, reddit e stackoverflow.
 \par
-
+\par Primeiramente, tentámos usar o nginx mas verificámos que o daemon inspIRCd só tem suporte para o HAProxy. Depois disso, vendo alguns tutoriais de utilização desta ferramenta, conseguimos conectar aos nossos servidores. Decidimos implementar com o algoritmo Round Robin, pois pareceu-nos o mais simples neste contexto.
+\par
 \begin{figure}[h]
 \center
 \includegraphics[width=80mm,height=50mm,scale=0.5]{haproxylogo.png}
@@ -159,8 +160,9 @@
 \newpage
 
 \section{InspIRCd}
-\par É usado como base o InspIRCd, sendo o mesmo um servidor IRC (Internet Relay Chat, protocolo de comunicação usado basicamente em aplicações Chat) modular escrito em C++ para sistemas Linux, BSD, Windows e macOS.
-Foi criado de raiz para ser estável e leve, fornecendo um número ajustável de recursos, sendo personalizável de acordo com as necessidades de diferentes utilizadores.
+\par É usado como base o InspIRCd, sendo este um servidor IRC (Internet Relay Chat, protocolo de comunicação usado em aplicações Chat) modular, escrito em C++ para sistemas Linux, BSD, Windows e macOS.
+Foi criado de raíz para ser estável e leve, fornecendo um número ajustável de recursos, sendo personalizável de acordo com as necessidades de diferentes utilizadores.
+????????????????
 \par
 
 \begin{figure}[h]
@@ -180,7 +182,7 @@ Foi criado de raiz para ser estável e leve, fornecendo um número ajustável de
 %%%%%%%%%%%%%%%%%%%%
 
 \section{Docker}
-\par O Docker é uma ferramenta projetada para facilitar a criação, a implementação e execução de aplicações usando containers. Os containers permitem que um developer junte uma aplicação com todas as partes necessárias, tais como bibliotecas e dependências, podendo enviar tudo como um único pacote. O isolamento e a segurança dos containers permitem executar várias instâncias num determinado host sendo que estes mesmos são leves. 
+\par O Docker é uma ferramenta projetada para facilitar a criação, a implementação e a execução de aplicações usando containers. Os containers permitem que um developer crie uma aplicação com todas as partes necessárias, tais como bibliotecas e dependências, podendo enviar tudo como um único pacote. O isolamento e a segurança dos containers permitem executar várias instâncias num determinado host, sendo que estes são leves e altamente escaláveis. 
 \par
 
 \newpage
@@ -190,7 +192,7 @@ Foi criado de raiz para ser estável e leve, fornecendo um número ajustável de
 %%%%%%%%%%%%%%%%%%%%
 
 \subsection{Arquitetura do Docker}
-\par O Docker utiliza uma arquitetura cliente-servidor. O cliente Docker comunica com o Docker daemon, que faz grande parte do trabalho, ou seja a construção, a execução e a distribuição dos seus Docker containers. O cliente Docker e o daemon podem ser executados no mesmo sistema ou pode-se conectar o cliente Docker a um daemon remoto sendo que estes dois comunicam usando uma API REST sobre UNIX sockets ou uma interface de rede.
+\par O Docker utiliza uma arquitetura cliente-servidor. O cliente Docker comunica com o Docker daemon, que faz grande parte do trabalho, ou seja, a construção, a execução e a distribuição dos seus Docker containers. O cliente Docker e o daemon podem ser executados no mesmo sistema, ou pode conectar-se o cliente Docker a um daemon remoto, sendo que estes dois comunicam, usando uma API REST sobre UNIX sockets ou uma interface de rede.
 \par
 
 \begin{figure}[h]
@@ -203,14 +205,14 @@ Foi criado de raiz para ser estável e leve, fornecendo um número ajustável de
 %%%%%%%%%%%%%%%%%%%%
 
 \subsection{Docker Compose}
-\par O compose é uma ferramenta para a definição e execução de vários Docker containers de aplicações. Com esta ferramenta, pode-se usar um ficheiro YAML para configurar o serviço da aplicação. Após a criação do ficheiro de configuração pode-se facilmente criar e iniciar todos os serviços que foram introduzidos no mesmo. 
+\par O compose é uma ferramenta para a definição e execução de vários Docker containers de aplicações. Com esta ferramenta, pode usar-se um ficheiro YAML para configurar os serviços da aplicação. Após a implementação do ficheiro de configuração, a criação e a iniciação de todos os serviços que foram introduzidos realizar-se-ão de forma simplificada. 
 \par
 
-\par De forma simplificada o uso do Compose pode ser descrito em três processos:
+\par O uso do Compose pode ser descrito em três processos:
 \begin{enumerate}
   \item Definir o ambiente das aplicações com o Dockerfile para conseguir ser reproduzido em qualquer lado.
   \item Definir os serviços que fazem parte da aplicação pretendida no ficheiro.yml para ser executado em conjunto num ambiente isolado.
-  \item Executar o comando "docker-compose up" e dessa forma o Compose arranca e inicia toda a aplicação.
+  \item Executar o comando "docker-compose up" e, dessa forma, o Compose arranca e inicia toda a aplicação.
 \end{enumerate}
 \par
 \par Abaixo encontra-se uma imagem exemplo do Dockerfile usado.
@@ -226,7 +228,7 @@ Foi criado de raiz para ser estável e leve, fornecendo um número ajustável de
 %%%%%%%%%%%%%%%%%%%%
 
 \subsection{Docker Swarm}
-\par O Docker Swarm é uma ferramenta de "clustering" e de agendamento para Docker Containers. Com o Swarm, os admnistradores e programadores de IT podem estabelecer e gerir um "cluster" dos nós do Docker como um único sistema virtual. 
+\par O Docker Swarm é uma ferramenta de "clustering" e de agendamento para Docker Containers. Com o Swarm, os administradores e os programadores de IT podem estabelecer e gerir um "cluster" de nós do Docker como um único sistema virtual. 
 \par
 
 \begin{figure}[h]
