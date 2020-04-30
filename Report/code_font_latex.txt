@@ -162,7 +162,8 @@
 \section{InspIRCd}
 \par É usado como base o InspIRCd, sendo este um servidor IRC (Internet Relay Chat, protocolo de comunicação usado em aplicações Chat) modular, escrito em C++ para sistemas Linux, BSD, Windows e macOS.
 Foi criado de raíz para ser estável e leve, fornecendo um número ajustável de recursos, sendo personalizável de acordo com as necessidades de diferentes utilizadores.
-????????????????
+Decidimos usar este daemon por ser de fácil utilização e por ter bastantes módulos de integração à escolha. No início, tivemos alguns problemas de configuração, sendo estes ultrapassados mais tarde com persistência e trabalho. No entanto, restou uma tarefa que não ficou completa que iremos referir a seguir.
+
 \par
 
 \begin{figure}[h]
@@ -175,7 +176,8 @@ Foi criado de raíz para ser estável e leve, fornecendo um número ajustável d
 %%%%%%%%%%%%%%%%%%%%
 
 \section{MySQL}
-\par falar da base de dados \par
+\par O MySQL é um sistema de gerenciamento de banco de dados (SGBD), que utiliza a linguagem SQL (Linguagem de Consulta Estruturada, do inglês Structured Query Language) como interface. É atualmente um dos sistemas de gerenciamento de bancos de dados mais populares[1] da Oracle Corporation, com mais de 10 milhões de instalações pelo mundo.
+A nossa ideia seria implementar o MySQL como base de dados de conecção entre os dois servidores. Assim, estariam sempre em sincronia e em caso de falha, nunca se perde nada. Tentámos configurar de acordo com a documentação do inspIRCd mas sem sucesso, devido a um erro de um dos módulos. \par
 
 %%%%%%%%%%%%%%%%%%%%
 %% Docker
